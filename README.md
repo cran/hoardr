@@ -4,6 +4,7 @@ hoardr
 
 
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![cran checks](https://cranchecks.info/badges/worst/hoardr)](https://cranchecks.info/pkgs/hoardr)
 [![Build Status](https://travis-ci.org/ropensci/hoardr.svg?branch=master)](https://travis-ci.org/ropensci/hoardr)
 [![codecov.io](https://codecov.io/github/ropensci/hoardr/coverage.svg?branch=master)](https://codecov.io/github/ropensci/hoardr?branch=master)
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/hoardr)](https://github.com/metacran/cranlogs.app)
@@ -47,7 +48,7 @@ initialize client
 (x <- hoardr::hoard())
 #> <hoard> 
 #>   path: 
-#>   cache path: /var/folders/gs/4khph0xs0436gmd2gdnwsg080000gn/T//RtmpMKopcW/R/stuffthings
+#>   cache path:
 ```
 
 set cache path
@@ -55,7 +56,7 @@ set cache path
 
 ```r
 x$cache_path_set("foobar", type = 'tempdir')
-#> [1] "/var/folders/gs/4khph0xs0436gmd2gdnwsg080000gn/T//RtmpMKopcW/R/foobar"
+#> [1] "/var/folders/fc/n7g_vrvn0sx_st0p8lxb3ts40000gn/T//RtmpsvaRsk/R/foobar"
 ```
 
 make the directory if doesn't exist
@@ -77,7 +78,7 @@ list the files
 
 ```r
 x$list()
-#> [1] "/var/folders/gs/4khph0xs0436gmd2gdnwsg080000gn/T//RtmpMKopcW/R/foobar/foo.txt"
+#> [1] "/var/folders/fc/n7g_vrvn0sx_st0p8lxb3ts40000gn/T//RtmpsvaRsk/R/foobar/foo.txt"
 ```
 
 details
@@ -86,7 +87,7 @@ details
 ```r
 x$details()
 #> <cached files>
-#>   directory: /var/folders/gs/4khph0xs0436gmd2gdnwsg080000gn/T//RtmpMKopcW/R/foobar
+#>   directory: /var/folders/fc/n7g_vrvn0sx_st0p8lxb3ts40000gn/T//RtmpsvaRsk/R/foobar
 #> 
 #>   file: /foo.txt
 #>   size: 0 mb
@@ -110,6 +111,6 @@ see [issue 1](https://github.com/ropensci/hoardr/issues/1)
 * Please [report any issues or bugs](https://github.com/ropensci/hoardr/issues).
 * License: MIT
 * Get citation information for `hoardr` in R doing `citation(package = 'hoardr')`
-* Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+* Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 [![rofooter](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)

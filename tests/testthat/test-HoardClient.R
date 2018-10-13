@@ -22,7 +22,7 @@ test_that("HoardClient works", {
 
   # test cache_path_set method
   expect_is(bb$cache_path_set, "function")
-  expect_error(bb$cache_path_set(), "argument \"path\" is missing")
+  expect_equal(length(bb$cache_path_set()), 0)
   expect_is(
     bb$cache_path_set(path = "test123", type = 'tempdir'),
     "character"
@@ -30,6 +30,12 @@ test_that("HoardClient works", {
   expect_match(
     bb$cache_path_set(path = "test123", type = 'tempdir'),
     "test123"
+  )
+
+  # use full_path
+  expect_is(
+    bb$cache_path_set(full_path = tempdir()),
+    'character'
   )
 
   # clean up before testing
@@ -94,6 +100,16 @@ test_that("HoardClient works", {
   expect_is(bb$uncompress, "function")
   ## no files in yet, gives error
   expect_message(bb$uncompress(), "no files to uncompress")
+
+  # test exists method
+  ## add some files first
+  cat(1:10000L, file = file.path(bb$cache_path_get(), "bar1.txt"))
+  cat(1:10000L, file = file.path(bb$cache_path_get(), "bar2.txt"))
+  expect_is(bb$exists('bar1.txt'), "data.frame")
+  expect_true(bb$exists('bar1.txt')$exists)
+  expect_false(bb$exists('asdfasdsdf')$exists)
+  ## no files in yet, gives error
+  expect_error(bb$exists(), "argument \"files\" is missing")
 })
 
 context("HoardClient - when files exist")

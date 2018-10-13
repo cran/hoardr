@@ -21,7 +21,7 @@
 #'       Get the cache path
 #'       **return**: (character) path to the cache directory
 #'     }
-#'     \item{`cache_path_set(path, type = "user_cache_dir", prefix = "R")`}{
+#'     \item{`cache_path_set(path = NULL, type = "user_cache_dir", prefix = "R", full_path = NULL)`}{
 #'       Set the cache path. By default, we set cache path to
 #'       `file.path(user_cache_dir, prefix, path)`. Note that this does not
 #'       actually make the directory, but just sets the path to it.
@@ -30,6 +30,8 @@
 #'         by `type`
 #'        \item type (character) the type of cache, see [rappdirs]
 #'        \item prefix (character) prefix to the `path` value. Default: "R"
+#'        \item full_path (character) instead of using `path`, `type`, and `prefix`
+#'         just set the full path with this parameter
 #'       }
 #'       **return**: (character) path to the cache directory just set
 #'     }
@@ -92,12 +94,30 @@
 #'       Uncompress all files and remove zip file
 #'       **return**: (character) path to the cache directory
 #'     }
+#'     \item{`exists(files)`}{
+#'       Check if files exist
+#'       \itemize{
+#'        \item files: (character) one or more files, paths are optional
+#'       }
+#'       **return**: (data.frame) with two columns: 
+#'       \itemize{
+#'        \item files: (character) file path 
+#'        \item exists: (boolean) does it exist or not
+#'       }
+#'     }
 #'   }
 #' @format NULL
 #' @usage NULL
 #' @examples
 #' (x <- hoard())
 #' x$cache_path_set(path = "foobar", type = 'tempdir')
+#' x
+#' x$path
+#' x$cache_path_get()
+#' 
+#' # Or you can set the full path directly with `full_path`
+#' mydir <- file.path(tempdir(), "foobar")
+#' x$cache_path_set(full_path = mydir)
 #' x
 #' x$path
 #' x$cache_path_get()
@@ -109,6 +129,15 @@
 #' x$list()
 #' cat(1:10000L, file = file.path(x$cache_path_get(), "foo.txt"))
 #' x$list()
+#' 
+#' # add more files
+#' cat(letters, file = file.path(x$cache_path_get(), "foo2.txt"))
+#' cat(LETTERS, file = file.path(x$cache_path_get(), "foo3.txt"))
+#' 
+#' # see if files exist
+#' x$exists("foo.txt") # exists
+#' x$exists(c("foo.txt", "foo3.txt")) # both exist
+#' x$exists(c("foo.txt", "foo3.txt", "stuff.txt")) # one doesn't exist
 #'
 #' # cache details
 #' x$details()
@@ -170,10 +199,17 @@ HoardClient <- R6::R6Class(
       if (inherits(res, "error")) return(NULL) else res
     },
 
-    cache_path_set = function(path, type = "user_cache_dir", prefix = "R") {
-      self$path <- path
-      private$hoard_env$cache_path <-
-        file.path(eval(parse(text = type))(), prefix, path)
+    cache_path_set = function(path = NULL, type = "user_cache_dir", prefix = "R", 
+      full_path = NULL) {
+
+      if (is.null(full_path)) {
+        self$path <- path
+        private$hoard_env$cache_path <-
+          file.path(eval(parse(text = type))(), prefix, path)
+      } else {
+        private$hoard_env$cache_path <- full_path
+      }
+      # return path to user
       self$cache_path_get()
     },
 
@@ -257,6 +293,11 @@ HoardClient <- R6::R6Class(
       # remove zip file
       unlink(comp_path)
       message("uncompressed!")
+    },
+
+    exists = function(files) {
+      files <- private$make_paths(files)
+      data.frame(files = files, exists = file.exists(files), stringsAsFactors = FALSE)
     }
   ),
 
