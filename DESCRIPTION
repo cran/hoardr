@@ -6,7 +6,7 @@ Description: Suite of tools for managing cached files, targeting
     Provides utilities to manage cache directories, including targeting
     files by path or by key; cached directories can be compressed and
     uncompressed easily to save disk space.
-Version: 0.5.0
+Version: 0.5.2
 Authors@R: c(person("Scott", "Chamberlain", role = c("aut", "cre"),
     email = "myrmecocystus@gmail.com"))
 License: MIT + file LICENSE
@@ -16,13 +16,13 @@ VignetteBuilder: knitr
 Encoding: UTF-8
 Imports: R6 (>= 2.2.0), rappdirs (>= 0.3.1), digest
 Suggests: roxygen2 (>= 6.0.1), testthat, knitr, rmarkdown
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 X-schema.org-applicationCategory: Data
 X-schema.org-keywords: caching, data, files, xml, pdf
 X-schema.org-isPartOf: https://ropensci.org
 NeedsCompilation: no
-Packaged: 2018-10-13 01:28:08 UTC; sckott
+Packaged: 2018-12-01 23:39:26 UTC; sckott
 Author: Scott Chamberlain [aut, cre]
 Maintainer: Scott Chamberlain <myrmecocystus@gmail.com>
 Repository: CRAN
-Date/Publication: 2018-10-13 04:20:13 UTC
+Date/Publication: 2018-12-02 00:00:03 UTC
