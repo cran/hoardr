@@ -7,10 +7,10 @@ knitr::opts_chunk$set(
 )
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  install.packages("hoardr")
+# install.packages("hoardr")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  devtools::install_github(c("ropensci/hoardr"))
+# devtools::install_github(c("ropensci/hoardr"))
 
 ## -----------------------------------------------------------------------------
 library("hoardr")
